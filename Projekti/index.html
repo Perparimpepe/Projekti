@@ -28,24 +28,72 @@
 
 
 <main>
-    <section id="home">
-        <h2>Home</h2>
-        <p>Welcome to Tracker. Where you can track your </p>
-    </section>
-    <section id="about">
-        <h2>About</h2>
-        <p>This is the about section.</p>
-    </section>
-    <section id="services">
-        <h2>Services</h2>
-        <p>This is the services section.</p>
-    </section>
-    
+    <div>    
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to Tracker. Where you can track your progress</p>
+        </section>
+        <section id="about">
+            <h2>About</h2>
+            <p>This is the about section.</p>
+        </section>
+        <section id="services">
+            <h2>Services</h2>
+            <p>This is the services section.</p>
+        </section>
+        <table id="data" class="display">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Hours</th>
+                <th>Extra</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Study</td>
+                <td>Javascript</td>
+                <td>5000</td>
+            </tr>
+            <tr>
+                <td>Gym</td>
+                <td>Leg day</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>$433,060</td>
+            </tr>
+            <tr>
+                <td>Airi Satou</td>
+                <td>Accountant</td>
+                <td>$162,700</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+        <p>
+            Category 
+            <label for="textfield">:</label>
+            <input type="text" name="textfield" id="textfield">
+            <br>
+            Hours:
+            <input type="number" name="textfield2" id="textfield2">
+            <br>
+            Extra: 
+            <input type="text" name="textfield3" id="textfield3">
+            <br>
+            <input type="button" onclick="insertRows()" name="Insert" id="Insert" value="Insert">
+        </p>
+    </div>
 </main>
 <footer>
-    <div id="contact">
-        <h2>Contact</h2>
-        <p>This is the contact section.</p>
-    </div>
     <p>&copy; 2023 Projekti. All rights reserved.</p>
 </footer>
