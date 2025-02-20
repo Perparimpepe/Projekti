@@ -21,12 +21,36 @@ function handleSubmit(event) {
     cell1.innerHTML = category;
     cell2.innerHTML = hours;
     cell3.innerHTML = extra;
+    
+    // Tallenna tiedot localStorageen
+    var data = JSON.parse(localStorage.getItem('tableData')) || [];
+    data.push({ category, hours, extra });
+    localStorage.setItem('tableData', JSON.stringify(data));
 
     // Tyhjentää lomakkeen kentät
     document.getElementById('category').value = '';
     document.getElementById('hours').value = '';
     document.getElementById('extra').value = '';
 }
+
+function loadTableData() {
+    var data = JSON.parse(localStorage.getItem('tableData')) || [];
+    var table = document.getElementById('data').getElementsByTagName('tbody')[0];
+    
+    data.forEach(function(item) {
+        var newRow = table.insertRow();
+        var cell1 = newRow.insertCell(0);
+        var cell2 = newRow.insertCell(1);
+        var cell3 = newRow.insertCell(2);
+
+        cell1.innerHTML = item.category;
+        cell2.innerHTML = item.hours;
+        cell3.innerHTML = item.extra;
+    });
+}
+
+// Lataa tallennetut tiedot sivun latautuessa
+window.onload = loadTableData;
 
 // Lisää tapahtumankuuntelija lomakkeelle
 document.querySelector('form').addEventListener('submit', handleSubmit);
