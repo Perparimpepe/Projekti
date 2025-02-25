@@ -80,6 +80,7 @@ section {
     justify-content: center; /* Center align items vertically */
     text-align: center;
     border: #0b0b0b 2px solid; /* T1701 */
+    width: 48%; /* Set width to 50% */
 }
 
 h1 {

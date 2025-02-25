@@ -20,7 +20,7 @@
 <main>
     <div class = "row">    
         
-            <div>   
+            <!--<div>
                 <nav>
                     <ul>
                         <li onclick="painallus()"><a href="home">Etusivu</a></li>
@@ -29,38 +29,54 @@
                         <li><a href="contact">Contact</a></li>
                     </ul>
                 </nav>
-            </div>
-        <section>
+            </div>-->
+        <section class="row">
             <h2>Track your progress </h2>
             <form action="#">
-                <label for="category">Category:</label>
-                <input type="text" id="category" name="category">
-                
-                <label for="hours">Hours:</label>
-                <input type="number" id="hours" name="hours">
-                
-                <label for="extra">Extra:</label>
-                <input type="text" id="extra" name="extra">
-                
-                <input type="submit" value="Submit">
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="Work">Work</option>
+                <option value="Exercise">Exercise</option>
+                <option value="Study">Study</option>
+                <option value="Hobby">Hobby</option>
+            </select>
+            
+            <label for="hours">Hours:</label>
+            <input type="number" id="hours" name="hours">
+            
+            <label for="extra">Extra:</label>
+            <input type="text" id="extra" name="extra">
+            
+            <input type="submit" value="Submit">
             </form>
         </section>
         <section>    
             <table id="data">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Hours</th>
-                        <th>Extra</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Uudet rivit lisätään tänne -->
-                </tbody>
+            <thead>
+                <tr>
+                <th>Category</th>
+                <th>Hours</th>
+                <th>Extra</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Uudet rivit lisätään tänne -->
+            </tbody>
             </table>
+            <h2>Summary</h2>
+            <button onclick="summary()">Show Summary</button>
+            <div id="summary"></div>
+            <textarea id="summaryText" rows="4" cols="50" placeholder=></textarea>
         </section>
+        <!--<section>
+            <h2>Summary</h2>
+            <button onclick="summary()">Show Summary</button>
+            <div id="summary"></div>
+            <textarea id="summaryText" rows="4" cols="50" placeholder=></textarea>
+        </section>-->
     </div>
 </main>
 <footer>
+    <button id="clearButton" onclick="clearData">Clear</button>
     <p>&copy; 2023 Projekti. All rights reserved.</p>
 </footer>
