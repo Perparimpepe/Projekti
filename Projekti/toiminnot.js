@@ -72,7 +72,11 @@ function summary() {
         extra += item.extra + ' ';
     });
 
-    var summaryText = 'Summary: ' + totalHours + ' hours and ' + extra.trim() + ' extra information';
+    var summaryText = '';
+    summaryText += 'Total Hours: ' + totalHours + '\n';
+    data.forEach(function(item) {
+        summaryText += item.category + ': ' + item.hours + ' hours ' + item.extra.trim() + '\n';
+    });
     document.getElementById('summaryText').value = summaryText;
 }
     function clearData() {
