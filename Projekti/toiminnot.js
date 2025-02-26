@@ -42,9 +42,7 @@ function handleSubmit(event) {
     loadTableData();
 
     // Tyhjentää lomakkeen kentät
-    document.getElementById('category').value = '';
-    document.getElementById('hours').value = '';
-    document.getElementById('extra').value = '';
+    resetForm();
 }
 
 function loadTableData() {
@@ -72,6 +70,13 @@ window.onload = loadTableData;
 // Lisää tapahtumankuuntelija lomakkeelle
 document.querySelector('form').addEventListener('submit', handleSubmit);
 
+function resetForm() {
+    document.getElementById('category').value = '';
+    document.getElementById('hours').value = '';
+    document.getElementById('extra').value = '';
+    document.getElementById('category').style.border = '';
+    document.getElementById('hours').style.border = '';
+}
 
 function summary() {
     var data = JSON.parse(localStorage.getItem('tableData')) || [];
