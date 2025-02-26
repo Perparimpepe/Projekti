@@ -6,9 +6,19 @@ function handleSubmit(event) {
     var hours = document.getElementById('hours').value;
     var extra = document.getElementById('extra').value;
 
-    // Tarkistaa, että category ja hours kentät eivät ole tyhjiä
-    if (category === '' || hours === '') {
-        alert("Täytä kaikki kentät!");
+    // Tarkistaa, että category ja hours kentät eivät ole tyhjiä tao negatiivisia
+    if (category === '' || hours === '' || parseInt(hours) < 0) {
+        alert("Fill all areas properly!");
+        if (category === '') {
+            document.getElementById('category').style.border = '2px solid red';
+        } else {
+            document.getElementById('category').style.border = '';
+        }
+        if (hours === '' || parseInt(hours) < 0) {
+            document.getElementById('hours').style.border = '2px solid red';
+        } else {
+            document.getElementById('hours').style.border = '';
+        }
         return;
     }
 
@@ -62,21 +72,28 @@ window.onload = loadTableData;
 // Lisää tapahtumankuuntelija lomakkeelle
 document.querySelector('form').addEventListener('submit', handleSubmit);
 
+
 function summary() {
     var data = JSON.parse(localStorage.getItem('tableData')) || [];
     var totalHours = 0;
-    var extra = '';
+    var categoryHours = {};
 
     data.forEach(function(item) {
         totalHours += parseInt(item.hours) || 0;
-        extra += item.extra + ' ';
+        if (!categoryHours[item.category]) {
+            categoryHours[item.category] = 0;
+        }
+        categoryHours[item.category] += parseInt(item.hours) || 0;
     });
 
-    var summaryText = '';
-    summaryText += 'Total Hours: ' + totalHours + '\n';
-    data.forEach(function(item) {
-        summaryText += item.category + ': ' + item.hours + ' hours ' + item.extra.trim() + '\n';
-    });
+    var summaryText = 'Total Hours: ' + totalHours + '\n';
+    for (var category in categoryHours) {
+        var percentage = ((categoryHours[category] / totalHours) * 100).toFixed(2);
+        summaryText += category + ': ' + categoryHours[category] + ' hours (' + percentage + '%)\n';
+    }
+    //data.forEach(function(item) {
+        //summaryText += item.category + ': ' + item.hours + ' hours ' + item.extra.trim() + '\n';
+    //});
     document.getElementById('summaryText').value = summaryText;
 }
     function clearData() {
@@ -89,6 +106,8 @@ function summary() {
     // Tyhjentää yhteenvedon tekstin
     document.getElementById('summaryText').value = '';
 }
-
+    function clearText() {
+        document.getElementById('summaryText').value = '';
+}
 // Lisää tapahtumankuuntelija tyhjennyspainikkeelle
 document.getElementById('clearButton').addEventListener('click', clearData);

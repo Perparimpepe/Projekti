@@ -64,8 +64,12 @@
             </tbody>
             </table>
             <h2>Summary</h2>
-            <button onclick="summary()">Show Summary</button>
-            <div id="summary"></div>
+                <div class="row">              
+                    <button onclick="summary()">Show Summary</button> 
+                    <button id="clearButton" onclick="clearData()">Clear Data</button>
+                    <button id="textButton" onclick="clearText()">Clear Text Area</button>
+                </div> 
+            <!--<div id="summary"></div>-->
             <textarea id="summaryText" rows="4" cols="50" placeholder=></textarea>
         </section>
         <!--<section>
