@@ -77,24 +77,24 @@ button {
     }
 
     section {
-        width: 100%; /* Set width to 100% for smaller screens */
+        width: 100%; /* Asettaa leveys 100% pienemmille näytöille */
     }
 
     textarea {
-        width: 90%; /* Set width to 90% for smaller screens */
+        width: 90%; /* Asettaa leveys 90% pienemmille näytöille */
     }
 
     table {
-        width: 100%; /* Set width to 100% for smaller screens */
+        width: 100%; /* Asettaa leveys 100% pienemmille näytöille */
     }
 
     input, select {
-        width: 90%; /* Set width to 90% for smaller screens */
-        margin-bottom: 10px; /* Add some space between inputs */
+        width: 90%; /* Asettaa leveys 90% pienemmille näytöille */
+        margin-bottom: 10px; /* Lisää tilaa syöttökenttien väliin */
     }
 
     button {
-        width: 90%; /* Set width to 90% for smaller screens */
-        margin-bottom: 10px; /* Add some space between buttons */
+        width: 90%; /* Asettaa leveys 90% pienemmille näytöille */
+        margin-bottom: 10px; /* Lisää tilaa painikkeiden väliin */
     }
 }
