@@ -70,3 +70,31 @@ p {
 button {
     margin-left: 10px;
 }
+@media (max-width: 768px) {
+    body {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    section {
+        width: 100%; /* Set width to 100% for smaller screens */
+    }
+
+    textarea {
+        width: 90%; /* Set width to 90% for smaller screens */
+    }
+
+    table {
+        width: 100%; /* Set width to 100% for smaller screens */
+    }
+
+    input, select {
+        width: 90%; /* Set width to 90% for smaller screens */
+        margin-bottom: 10px; /* Add some space between inputs */
+    }
+
+    button {
+        width: 90%; /* Set width to 90% for smaller screens */
+        margin-bottom: 10px; /* Add some space between buttons */
+    }
+}
