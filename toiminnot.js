@@ -96,9 +96,6 @@ function summary() {
         var percentage = ((categoryHours[category] / totalHours) * 100).toFixed(2);
         summaryText += category + ': ' + categoryHours[category] + ' hours (' + percentage + '%)\n';
     }
-    //data.forEach(function(item) {
-        //summaryText += item.category + ': ' + item.hours + ' hours ' + item.extra.trim() + '\n';
-    //});
     document.getElementById('summaryText').value = summaryText;
 }
     function clearData() {
