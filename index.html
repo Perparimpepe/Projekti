@@ -10,57 +10,31 @@
 <body>
     <header>
         <h1>Check What Movies to See</h1>
-        <p class="p"></p>
+        <p class="p">Select a theater to view ongoing movies and details</p>
     </header>
 
  
-<main>
-    <div class = "row">    
-        <section class="row">
-            <h2>Track your progress </h2>
-            <form action="#">
-            <label for="category">Areas:</label>
-            <select id="category" name="category">
-                <option value="Work">Work</option>
-                <option value="Exercise">Exercise</option>
-                <option value="Study">Study</option>
-                <option value="Hobby">Hobby</option>
-            </select>
+    <main>
+        <div class = "row">    
+            <section class="row">
+                <h2>Select a Theater</h2>
+                <label for="theaterSelect">Theaters:</label>
+                <select id="theaterSelect">
+                    <!-- Options will be dynamically populated -->
+                </select>
+            </section>
             
-            <label for="hours">Hours:</label>
-            <input type="number" id="hours" name="hours">
-            
-            <label for="extra">Extra:</label>
-            <input type="text" id="extra" name="extra">
-            
-            <input type="submit" value="Submit">
-            </form>
-        </section>
-        <section>    
-            <table id="data">
-            <thead>
-                <tr>
-                <th>Category</th>
-                <th>Hours</th>
-                <th>Extra</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Uudet rivit lisätään tänne -->
-            </tbody>
-            </table>
-            <h2>Summary</h2>
-                <div class="row">              
-                    <button onclick="">Show Summary</button> 
-                    <button id="clearButton" onclick="">Clear Data</button>
-                    <button id="textButton" onclick="">Clear Text Area</button>
-                </div> 
-            <textarea id="summaryText" rows="4" cols="50" placeholder=""></textarea>
-        </section>
-    </div>
-</main>
-<footer>
-    <p>&copy; 2025 Projekti. All rights reserved.</p>
-</footer>
+            <!-- Movie Details -->
+            <section id="movieDetails">
+                <h2>Ongoing Movies</h2>
+                <div id="moviesContainer">
+                    <!-- Movie details will be dynamically populated -->
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Projekti. All rights reserved.</p>
+    </footer>
 </body>
 </html>
