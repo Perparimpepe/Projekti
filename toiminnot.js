@@ -96,16 +96,21 @@ function goingMovies() {
             var parser = new DOMParser();
             var xml = parser.parseFromString(this.responseText, "application/xml");
             var shows = xml.getElementsByTagName("Show");
-            var output = "<h2>On going movies:</h2></br>";
+            // Luodaan HTML-taulukko elokuvien näyttämistä varten
+            var output = "<h2>On going movies:</h2></br><table>";
             // Käydään läpi kaikki näytökset
             for (var i = 0; i < shows.length; i++) {
                 var title = shows[i].getElementsByTagName("Title")[0].textContent;
                 var imageUrl = shows[i].getElementsByTagName("EventSmallImagePortrait")[0].textContent;
-                //var startTime = shows[i].getElementsByTagName("dttmShowStart")[0].textContent;
-                output += `<img src="${imageUrl}" alt="${title}" />`;
-                output += `<h3>${title}</h3>`;
-                   
+                //Näytetään vain elokuvia, joiden näyttöaika on menossa taulukossa
+                output += `
+                    <tr>
+                        <td><img src="${imageUrl}" alt="${title}" style="width: 150px;"></td>
+                        <td><h4>${title}</h4></td>
+                    </tr>
+                `;          
             }
+            output += "</table>";
             // Näytetään elokuvat
             moviesContainer.innerHTML = output;
         }
