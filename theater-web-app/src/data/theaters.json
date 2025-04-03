@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Finnkino Helsinki",
+        "location": "Helsinki",
+        "image": "images/finnkino_helsinki.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Finnkino Espoo",
+        "location": "Espoo",
+        "image": "images/finnkino_espoo.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Finnkino Vantaa",
+        "location": "Vantaa",
+        "image": "images/finnkino_vantaa.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Finnkino Oulu",
+        "location": "Oulu",
+        "image": "images/finnkino_oulu.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Finnkino Tampere",
+        "location": "Tampere",
+        "image": "images/finnkino_tampere.jpg"
+    }
+]
