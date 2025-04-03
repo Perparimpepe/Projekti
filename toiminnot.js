@@ -38,10 +38,10 @@ function handleSubmit(event) {
     // Tallenna tiedot localStorageen
     localStorage.setItem('tableData', JSON.stringify(data));
 
-    // Päivittää taulukon
+    // Päivittää taulukon,kutsuu funktiota
     loadTableData();
 
-    // Tyhjentää lomakkeen kentät
+    // Tyhjentää lomakkeen kentät, kutsuu funktiota
     resetForm();
 }
 
@@ -102,7 +102,7 @@ function summary() {
     // Poistaa tiedot localStoragesta
     localStorage.removeItem('tableData');
 
-    // Päivittää taulukon
+    // Päivittää taulukon, kutsuu funktiota
     loadTableData();
 
     // Tyhjentää yhteenvedon tekstin
