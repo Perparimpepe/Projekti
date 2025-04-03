@@ -18,15 +18,15 @@
         <div class = "row">    
             <section class="row">
                 <h2>Select a Theater</h2>
+                <button id= onMovies onclick="goingMovies()">Select on going movie</button>
                 <label for="theaterSelect">Theaters:</label>
-                <select id="theaterSelect">
+                <select id="theaterSelect" onchange="getTheaterId()"></select>
                     <!-- Options will be dynamically populated -->
                 </select>
             </section>
-            
+        </div>
             <!-- Movie Details -->
             <section id="movieDetails">
-                <h2>Ongoing Movies</h2>
                 <div id="moviesContainer">
                     <!-- Movie details will be dynamically populated -->
                 </div>
