@@ -54,36 +54,37 @@
             });
     });
 });*/
-async function getTheaterId() {
-    const theaterSelect = document.getElementById("theaterSelect");
+function getTheaterId() {
+    var theaterSelect = document.getElementById("theaterSelect");
+    var xhttp = new XMLHttpRequest();
 
-    try {
-        // Hakee teatterit FinnKinon API:sta
-        const response = await fetch("https://www.finnkino.fi/xml/TheatreAreas/");
-        const data = await response.text();
+    // Määritetään HTTP-pyyntö
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(this.responseText, "application/xml");
+            var theaters = xml.getElementsByTagName("TheatreArea");
 
-        // Parsii XML-datan DOMParserilla
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data, "application/xml");
-        const theaters = xml.getElementsByTagName("TheatreArea");
+            // Tyhjennetään valikko ennen uusien teattereiden lisäämistä
+            theaterSelect.innerHTML = "";
 
-        // Tyhjentää valikon ennen uusien teattereiden lisäämistä
-        theaterSelect.innerHTML = "";
+            // Käydään läpi kaikki teatterit ja lisätään ne valikkoon
+            for (var i = 0; i < theaters.length; i++) {
+                var id = theaters[i].getElementsByTagName("ID")[0].textContent;
+                var name = theaters[i].getElementsByTagName("Name")[0].textContent;
 
-        // Lisää teatterit valikkoon
-        for (let theater of theaters) {
-            const id = theater.getElementsByTagName("ID")[0].textContent;
-            const name = theater.getElementsByTagName("Name")[0].textContent;
-
-            const option = document.createElement("option");
-            option.value = id;
-            option.textContent = name;
-            theaterSelect.appendChild(option);
+                var option = document.createElement("option");
+                option.value = id;
+                option.textContent = name;
+                // Lisätään teatteri valikkoon
+                theaterSelect.appendChild(option);
+            }
         }
-    } catch (error) {
-        console.error("Error fetching theater data:", error);
-        alert("Failed to load theaters. Please try again later.");
-    }
+    };
+
+    // Lähetetään HTTP GET -pyyntö FinnKinon API:lle
+    xhttp.open("GET", "https://www.finnkino.fi/xml/TheatreAreas/", true);
+    xhttp.send();
 }
 function goingMovies() {
     var moviesContainer = document.getElementById("moviesContainer");
