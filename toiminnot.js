@@ -81,7 +81,7 @@ function getTheaterId() {
                 if (id === selectedTheater) {
                     option.selected = true;
                 }
-
+                // Luo valintavaihtoehdon teatterille
                 theaterSelect.appendChild(option);
             }
         }
@@ -145,6 +145,7 @@ function showMovies() {
 
     var dateValue = selectedDate.value; // Päivämäärän arvo
     var xhttp = new XMLHttpRequest();
+    console.log("Selected date:", dateValue);
 
     // Tyhjennetään aiemmat elokuvat
     moviesContainer.innerHTML = "";
@@ -155,17 +156,7 @@ function showMovies() {
             var parser = new DOMParser();
             var xml = parser.parseFromString(this.responseText, "application/xml");
             var shows = xml.getElementsByTagName("Show");
-            var output = "<h2>Movies in selected theater:</h2></br><table border='1'>";
-            output += `
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Showtime</th>
-                    </tr>
-                </thead>
-                <tbody>
-            `;
+            var output = "<h2>Movies in selected theater:</h2></br><table>";
 
             // Käydään läpi kaikki näytökset
             for (var i = 0; i < shows.length; i++) {
@@ -182,7 +173,7 @@ function showMovies() {
                 `;
             }
 
-            output += "</tbody></table>";
+            output += "</table>";
 
             // Näytetään elokuvat
             moviesContainer.innerHTML = output;
@@ -193,3 +184,32 @@ function showMovies() {
     xhttp.open("GET", `https://www.finnkino.fi/xml/Schedule/?area=${selectedTheater}&dt=${dateValue}`, true);
     xhttp.send();
 }
+function dateOptions() {
+    const today = new Date();
+    const dateOptions = [
+        { id: "date-1001", label: "Today", daysToAdd: 0 },
+        { id: "date-1002", label: "Tomorrow", daysToAdd: 1 },
+        { id: "date-1003", label: "Day After Tomorrow", daysToAdd: 2 }
+    ];
+
+    dateOptions.forEach(option => {
+        const date = new Date(today);
+        date.setDate(today.getDate() + option.daysToAdd); // Lisätään päivät
+        const formattedDate = date.toISOString().split("T")[0]; // Muoto YYYY-MM-DD
+
+        // Päivitetään radio-painikkeen value
+        const radioButton = document.getElementById(option.id);
+        if (radioButton) {
+            radioButton.value = formattedDate;
+        }
+
+        // Päivitetään labelin teksti
+        const label = document.querySelector(`label[for="${option.id}"]`);
+        if (label) {
+            label.textContent = `${option.label} (${formattedDate})`;
+        }
+    });
+}
+
+// Kutsutaan funktiota, kun sivu ladataan
+document.addEventListener("DOMContentLoaded", dateOptions);
