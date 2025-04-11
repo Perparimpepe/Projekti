@@ -59,6 +59,7 @@ function getTheaterId() {
     var xhttp = new XMLHttpRequest();
     // Säilytetään käyttäjän nykyinen valinta
     var selectedTheater = theaterSelect.value;
+    
     // Tyhjennetään aiemmat teatterit
     theaterSelect.innerHTML = "";
     // Määritetään HTTP-pyyntö
@@ -134,10 +135,10 @@ function showMovies() {
     var moviesContainer = document.getElementById("moviesContainer");
 
     // Tarkistetaan, että teatteri ja päivämäärä on valittu
-    if (!selectedTheater) {
+    /*if (!selectedTheater || selectedTheater === 'valitse alue/teatteri') {
         alert("Please select a theater!");
         return;
-    }
+    }*/
     if (!selectedDate) {
         alert("Please select a date!");
         return;
@@ -146,7 +147,7 @@ function showMovies() {
     var dateValue = selectedDate.value; // Päivämäärän arvo
     var xhttp = new XMLHttpRequest();
     console.log("Selected date:", dateValue);
-
+    console.log("Selected theater:", selectedTheater);
     // Tyhjennetään aiemmat elokuvat
     moviesContainer.innerHTML = "";
 
