@@ -55,136 +55,120 @@
     });
 });*/
 function getTheaterId() {
-    var theaterSelect = document.getElementById("theaterSelect");
-    var xhttp = new XMLHttpRequest();
-    // Säilytetään käyttäjän nykyinen valinta
-    var selectedTheater = theaterSelect.value;
-    
-    // Tyhjennetään aiemmat teatterit
+    const theaterSelect = document.getElementById("theaterSelect");
+    const xhttp = new XMLHttpRequest();
+    // Tallennetan käyttäjän valinta
+    const selectedTheater = theaterSelect.value;
+    // Tyhjennetään datan
     theaterSelect.innerHTML = "";
-    // Määritetään HTTP-pyyntö
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(this.responseText, "application/xml");
-            var theaters = xml.getElementsByTagName("TheatreArea");
 
-            // Käydään läpi kaikki teatterit ja lisätään ne valikkoon
-            for (var i = 0; i < theaters.length; i++) {
-                var id = theaters[i].getElementsByTagName("ID")[0].textContent;
-                var name = theaters[i].getElementsByTagName("Name")[0].textContent;
+    xhttp.onload = function () {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(this.responseText, "application/xml");
+        const theaters = xml.getElementsByTagName("TheatreArea");
 
-                var option = document.createElement("option");
-                option.value = id;
-                option.textContent = name;
-
-                // Asetetaan valituksi, jos se vastaa aiempaa valintaa
-                if (id === selectedTheater) {
-                    option.selected = true;
-                }
-                // Luo valintavaihtoehdon teatterille
-                theaterSelect.appendChild(option);
-            }
+        // Käy läpi teatterit,luo option sarakkeen,lisää ne sinne
+        let output = "<option value=''>Select a theater</option>"; // Lisää oletusvalinta
+        for (let i = 0; i < theaters.length; i++) {
+            const id = theaters[i].getElementsByTagName("ID")[0].textContent;
+            const name = theaters[i].getElementsByTagName("Name")[0].textContent;
+            output += `<option value="${id}">${name}</option>`; // Se mikä tulee ulos
+        }
+        // Päivitetään teatterivalikko
+        theaterSelect.innerHTML = output;
+        // Palautetaan käyttäjän aiempi valinta, jos se on olemassa
+        if (selectedTheater) {
+            theaterSelect.value = selectedTheater;
         }
     };
-
     // Lähetetään HTTP GET -pyyntö FinnKinon API:lle
     xhttp.open("GET", "https://www.finnkino.fi/xml/TheatreAreas/", true);
     xhttp.send();
 }
 
-document.addEventListener("DOMContentLoaded", getTheaterId);
 function goingMovies() {
-    var moviesContainer = document.getElementById("moviesContainer");
-    var xhttp = new XMLHttpRequest();
-    // Tyhjennetään aiemmat elokuvat
+    const moviesContainer = document.getElementById("moviesContainer");
+    const xhttp = new XMLHttpRequest();
+    const uniqueMovies = new Set(); // Tallennetaan uniikit elokuvien nimet, ettei toistu
+
+    // Tyhjennetään datan
     moviesContainer.innerHTML = "";
-    // Määritetään HTTP-pyyntö
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(this.responseText, "application/xml");
-            var shows = xml.getElementsByTagName("Show");
-            // Luodaan HTML-taulukko elokuvien näyttämistä varten
-            var output = "<h2>On going movies:</h2></br><table>";
-            // Käydään läpi kaikki näytökset
-            for (var i = 0; i < shows.length; i++) {
-                var title = shows[i].getElementsByTagName("Title")[0].textContent;
-                var imageUrl = shows[i].getElementsByTagName("EventSmallImagePortrait")[0].textContent;
-                //Näytetään vain elokuvia, joiden näyttöaika on menossa taulukossa
+
+    xhttp.onload = function () {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(this.responseText, "application/xml");
+        const shows = xml.getElementsByTagName("Show");
+
+        let output = "<h2>On going movies:</h2></br><table>";
+
+        // Käydään läpi kaikki näytökset
+        for (let i = 0; i < shows.length; i++) {
+            const title = shows[i].getElementsByTagName("Title")[0].textContent;
+            const imageUrl = shows[i].getElementsByTagName("EventSmallImagePortrait")[0].textContent;
+            // Tarkistetaan, onko elokuva jo lisätty
+            if (!uniqueMovies.has(title)) { //Jos on lisätty, ei lisää uudestaan
+                uniqueMovies.add(title); // Jos ei ole lisätty, lisää se
                 output += `
                     <tr>
                         <td><img src="${imageUrl}" alt="${title}" style="width: 150px;"></td>
                         <td><h4>${title}</h4></td>
                     </tr>
-                `;          
+                `;
             }
-            output += "</table>";
-            // Näytetään elokuvat
-            moviesContainer.innerHTML = output;
         }
+        output += "</table>";
+        moviesContainer.innerHTML = output;
     };
-    // Lähetetään HTTP GET -pyyntö FinnKinon API:lle
     xhttp.open("GET", "https://www.finnkino.fi/xml/Schedule/", true);
     xhttp.send();
 }
-function showMovies() {
-    var theaterSelect = document.getElementById("theaterSelect");
-    var selectedTheater = theaterSelect.value; // Käyttäjän valitsema teatteri
-    var selectedDate = document.querySelector('input[name="date"]:checked'); // Käyttäjän valitsema päivämäärä
-    var moviesContainer = document.getElementById("moviesContainer");
 
-    // Tarkistetaan, että teatteri ja päivämäärä on valittu
-    /*if (!selectedTheater || selectedTheater === 'valitse alue/teatteri') {
+function showMovies() {
+    const theaterSelect = document.getElementById("theaterSelect");
+    const selectedTheater = theaterSelect.value; // Käyttäjän valitsema teatteri
+    const selectedDate = document.querySelector('input[name="date"]:checked'); // Käyttäjän valitsema päivämäärä
+    const moviesContainer = document.getElementById("moviesContainer");
+    //Tarkistaa, että teatteri ja päivämäärä on valittu
+    if (!selectedTheater) {
         alert("Please select a theater!");
         return;
-    }*/
+    }
     if (!selectedDate) {
         alert("Please select a date!");
         return;
     }
-
-    var dateValue = selectedDate.value; // Päivämäärän arvo
-    var xhttp = new XMLHttpRequest();
-    console.log("Selected date:", dateValue);
-    console.log("Selected theater:", selectedTheater);
-    // Tyhjennetään aiemmat elokuvat
+    const dateValue = selectedDate.value; 
+    const xhttp = new XMLHttpRequest();
+    // Tyhjennetään datan
     moviesContainer.innerHTML = "";
 
-    // Määritetään HTTP-pyyntö
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(this.responseText, "application/xml");
-            var shows = xml.getElementsByTagName("Show");
-            var output = "<h2>Movies in selected theater:</h2></br><table>";
+    xhttp.onload = function () {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(this.responseText, "application/xml");
+        const shows = xml.getElementsByTagName("Show");
 
-            // Käydään läpi kaikki näytökset
-            for (var i = 0; i < shows.length; i++) {
-                var title = shows[i].getElementsByTagName("Title")[0].textContent;
-                var imageUrl = shows[i].getElementsByTagName("EventSmallImagePortrait")[0].textContent;
-                var startTime = shows[i].getElementsByTagName("dttmShowStart")[0].textContent;
-
-                output += `
-                    <tr>
-                        <td><img src="${imageUrl}" alt="${title}" style="width: 150px;"></td>
-                        <td>${title}</td>
-                        <td>${new Date(startTime).toLocaleString()}</td>
-                    </tr>
-                `;
-            }
-
-            output += "</table>";
-
-            // Näytetään elokuvat
-            moviesContainer.innerHTML = output;
+        let output = "<h2>Movies in selected theater:</h2></br><table>";
+        // Käydään läpi kaikki näytökset
+        for (let i = 0; i < shows.length; i++) {
+            const title = shows[i].getElementsByTagName("Title")[0].textContent;
+            const imageUrl = shows[i].getElementsByTagName("EventSmallImagePortrait")[0].textContent;
+            const startTime = shows[i].getElementsByTagName("dttmShowStart")[0].textContent;
+            output += `
+                <tr>
+                    <td><img src="${imageUrl}" alt="${title}" style="width: 150px;"></td>
+                    <td>${title}</td>
+                    <td>${new Date(startTime).toLocaleString()}</td>
+                </tr>
+            `;
         }
+        output += "</table>";
+        // Näytetään elokuvat
+        moviesContainer.innerHTML = output;
     };
-
-    // Lähetetään HTTP GET -pyyntö FinnKinon API:lle käyttäjän valitsemilla ehdoilla
     xhttp.open("GET", `https://www.finnkino.fi/xml/Schedule/?area=${selectedTheater}&dt=${dateValue}`, true);
     xhttp.send();
 }
+
 function dateOptions() {
     const today = new Date();
     const dateOptions = [
@@ -211,6 +195,6 @@ function dateOptions() {
         }
     });
 }
-
 // Kutsutaan funktiota, kun sivu ladataan
 document.addEventListener("DOMContentLoaded", dateOptions);
+document.addEventListener("DOMContentLoaded", getTheaterId);
