@@ -156,8 +156,8 @@ function showMovies() {
             output += `
                 <tr>
                     <td><img src="${imageUrl}" alt="${title}" style="width: 150px;"></td>
-                    <td>${title}</td>
-                    <td>${new Date(startTime).toLocaleString()}</td>
+                    <td><h4>${title}</h4></td>
+                    <td><h4>${new Date(startTime).toLocaleString()}</h4></td>
                 </tr>
             `;
         }
