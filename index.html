@@ -24,14 +24,9 @@
                     <!-- Elokuva lista tulee tähän -->
                 </select>
                 
-                <div id="dateOptions" class="row">
-                    <input type="radio" name="date" value="1001" id="date-1001">
-                    <label for="date-1001">Today</label><br>
-                    <input type="radio" name="date" value="1002" id="date-1002">
-                    <label for="date-1002">Tomorrow</label><br>
-                    <input type="radio" name="date" value="1003" id="date-1003">
-                    <label for="date-1003">Day After Tomorrow</label><br>
-                </div>
+                <label for="datePicker">Select a date:</label>
+                <input type="date" id="datePicker" name="date" />
+                
                 <button onclick="showMovies()">Show</button>
             </section>
             

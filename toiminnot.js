@@ -1,59 +1,3 @@
-//Varmistaa että HTLM on ladattu ennen kuin koodi suoritetaan
-/*document.addEventListener("DOMContentLoaded", () => {
-    const theaterSelect = document.getElementById("theaterSelect");
-    const moviesContainer = document.getElementById("moviesContainer");
-
-    // Fetch hakee teatterit
-    fetch("https://www.finnkino.fi/xml/TheatreAreas/")
-        .then(response => response.text()) // Hakee teatterit XML muodossa
-        .then(data => {
-            const parser = new DOMParser(); // Luo DOMParserin, joka muuntaa XML:n DOM:ksi
-            const xml = parser.parseFromString(data, "application/xml");
-            const theaters = xml.getElementsByTagName("TheatreArea");// Hakee teatterit XML:stä
-            // Lisää teatterit valikkoon
-            for (let theater of theaters) {
-                const id = theater.getElementsByTagName("ID")[0].textContent;
-                const name = theater.getElementsByTagName("Name")[0].textContent;
-
-                const option = document.createElement("option");
-                option.value = id;
-                option.textContent = name;
-                theaterSelect.appendChild(option);
-            }
-        });
-
-    // Kun teatteri valitaan, lataa elokuvat
-    theaterSelect.addEventListener("change", () => {
-        const theaterId = theaterSelect.value;
-        // Tyhjentää elokuvien säilön ennen uusien lataamista
-        moviesContainer.innerHTML = ""; 
-        // Hakee elokuvat valitusta teatterista
-        fetch(`https://www.finnkino.fi/xml/Schedule/?area=${theaterId}`)
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, "application/xml");
-                const shows = xml.getElementsByTagName("Show");
-                // Hakee elokuvien tiedot, jotka halutaan näyttää
-                for (let show of shows) {
-                    const title = show.getElementsByTagName("Title")[0].textContent;
-                    const imageUrl = show.getElementsByTagName("EventSmallImagePortrait")[0].textContent;
-                    const startTime = show.getElementsByTagName("dttmShowStart")[0].textContent;
-
-                    const movieDiv = document.createElement("div");
-                    movieDiv.classList.add("movie");
-
-                    movieDiv.innerHTML = `
-                        <img src="${imageUrl}" alt="${title}" />
-                        <h3>${title}</h3>
-                        <p>Showtime: ${new Date(startTime).toLocaleString()}</p>
-                    `;
-
-                    moviesContainer.appendChild(movieDiv);
-                }
-            });
-    });
-});*/
 function getTheaterId() {
     const theaterSelect = document.getElementById("theaterSelect");
     const xhttp = new XMLHttpRequest();
@@ -126,7 +70,8 @@ function goingMovies() {
 function showMovies() {
     const theaterSelect = document.getElementById("theaterSelect");
     const selectedTheater = theaterSelect.value; // Käyttäjän valitsema teatteri
-    const selectedDate = document.querySelector('input[name="date"]:checked'); // Käyttäjän valitsema päivämäärä
+    const datePicker = document.getElementById("datePicker");
+    const selectedDate = datePicker.value; // Käyttäjän valitsema päivämäärä
     const moviesContainer = document.getElementById("moviesContainer");
     //Tarkistaa, että teatteri ja päivämäärä on valittu
     if (!selectedTheater) {
@@ -137,7 +82,7 @@ function showMovies() {
         alert("Please select a date!");
         return;
     }
-    const dateValue = selectedDate.value; 
+    const dateValue = selectedDate; 
     const xhttp = new XMLHttpRequest();
     // Tyhjennetään datan
     moviesContainer.innerHTML = "";
@@ -169,7 +114,7 @@ function showMovies() {
     xhttp.send();
 }
 
-function dateOptions() {
+/*function dateOptions() {
     const today = new Date();
     const dateOptions = [
         { id: "date-1001", label: "Today", daysToAdd: 0 },
@@ -194,7 +139,7 @@ function dateOptions() {
             label.textContent = `${option.label} (${formattedDate})`;
         }
     });
-}
+}*/
 // Kutsutaan funktiota, kun sivu ladataan
-document.addEventListener("DOMContentLoaded", dateOptions);
+//document.addEventListener("DOMContentLoaded", dateOptions);
 document.addEventListener("DOMContentLoaded", getTheaterId);
