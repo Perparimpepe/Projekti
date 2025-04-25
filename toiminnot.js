@@ -72,6 +72,8 @@ function showMovies() {
     const selectedTheater = theaterSelect.value; // Käyttäjän valitsema teatteri
     const datePicker = document.getElementById("datePicker");
     const selectedDate = datePicker.value; // Käyttäjän valitsema päivämäärä
+    console.log("Selected Theater:", selectedTheater);
+    console.log("Selected Date:", selectedDate);
     const moviesContainer = document.getElementById("moviesContainer");
     //Tarkistaa, että teatteri ja päivämäärä on valittu
     if (!selectedTheater) {
